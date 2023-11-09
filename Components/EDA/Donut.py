@@ -17,6 +17,12 @@ def create_genre_popularity_donut_chart(df):
     fig = px.pie(top_10_genres, names='track_genre', values='popularity', hole=0.3, title='Genres de pistes les plus populaires')
     fig.update_traces(textinfo='percent+label')
 
+    
+    fig.update_layout(
+        plot_bgcolor='rgba(0,0,0,0)',
+        paper_bgcolor='rgba(0,0,0,0)',
+    )
+
     # Créez un widget Panel pour afficher le graphique Plotly
     donut_chart = pn.pane.Plotly(fig)
 

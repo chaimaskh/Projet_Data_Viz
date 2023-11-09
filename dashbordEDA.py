@@ -1,6 +1,9 @@
+from json.tool import main
+from sqlite3 import TimestampFromTicks
 import pandas as pd
 import numpy as np
 import panel as pn
+
 pn.extension('tabulator')
 from Utils.dataset import load_clean_dataset
 from Components.EDA.Tableau import create_dataframe_table 
@@ -10,8 +13,6 @@ from Components.EDA.Histograms import create_popularity_distribution_dashboard,c
 from Components.EDA.Donut import create_genre_popularity_donut_chart
 from Components.EDA.Violin import create_genre_valence_dashboard
 from Components.EDA.LinePlot import create_duration_plot
-
-
 
 df = load_clean_dataset('./data/dataset.csv')
 
@@ -26,9 +27,6 @@ Donut= create_genre_popularity_donut_chart(df)
 Violin = create_genre_valence_dashboard(df)
 Line_plot = create_duration_plot(df)
 
-
-
-
 # Créez un tableau de bord Panel pour afficher les deux tableaux
 dashboard = pn.Column(
     data_table,
@@ -41,23 +39,44 @@ dashboard = pn.Column(
     Donut,
     Violin,
     Line_plot
-
 )
-# Créez le modèle FastListTemplate
-#Layout using Template
+
+
+gif_pane = pn.pane.GIF('Templates\image.gif', sizing_mode='scale_both')
+#Template
 template = pn.template.FastListTemplate(
     title='Spotify dashboard', 
-    sidebar=[pn.pane.Markdown("# Spotify"), 
-             pn.pane.Markdown("#### Carbon dioxide emissions are the primary driver of global climate change. It’s widely recognised that to avoid the worst impacts of climate change, the world needs to urgently reduce emissions. But, how this responsibility is shared between regions, countries, and individuals has been an endless point of contention in international discussions."), 
-             pn.pane.PNG('Templates\spotify.png'),
-             pn.pane.Markdown("## Settings")],
-    main=[pn.Row(data_table, pn.Column(correlation_dashboard), 
-                 ), 
-          pn.Row(pn.Column(Histogram3), 
-                 pn.Column(Line_plot))],
-    accent_base_color="#88d8b0",
-    header_background="#88d8b0",
-)
+    sidebar=[pn.Row(pn.Spacer(width=10), pn.pane.Markdown("# Spotify", style={'text-align': 'center', 'font-size': '24px','margin-left': '50px'})),
+             pn.pane.Markdown("""
+        #### Level up your vibes with Spotify! 🎵 
+        Dive into a world of endless tunes, create your playlists, 
+        and let the music be the soundtrack to your moments. 
 
-# Serve the template
-template.servable()
+        Whether you're working, chilling, or dancing like nobody's watching, 
+        Spotify's got your back. 
+
+        Get ready to press play and let the good times roll! 🎉
+    """,style={'text-align': 'center', 'font-size': '14px'}), 
+             gif_pane,
+             ],
+    main=[
+    pn.Row(
+        data_table), 
+    pn.Row(
+        Donut, 
+        pn.Column(Histogram3)),
+    pn.Row(Line_plot), 
+    pn.Row(scatter1, pn.Column(scatter2)),
+    pn.Row(Violin)
+    
+],
+accent_base_color="#88d8b0",
+header_background="#1DB954")
+# template.show()
+template.servable();
+
+
+
+
+
+

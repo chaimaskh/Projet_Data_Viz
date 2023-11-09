@@ -9,6 +9,7 @@ def create_duration_plot(data):
             height=500,
             width=1200,
             sizing_mode='stretch_width',
+            
         )
 
     # Specify the columns you want in the filter widget

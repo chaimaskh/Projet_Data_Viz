@@ -1,3 +1,4 @@
+from turtle import width
 import panel as pn
 import pandas as pd
 import numpy as np
@@ -11,38 +12,22 @@ def create_correlation_dashboard(df):
     numeric_df = df[numeric_cols]
 
     # Créez un widget Panel pour afficher la matrice de corrélation
-    def show_correlation_matrix():
-        plt.figure(figsize=(15, 7))
-        sns.heatmap(numeric_df.corr(), annot=True, cmap=sns.cubehelix_palette(as_cmap=True))
-        plt.title('Matrice de Corrélation')
+    def show_correlation_matrix(alpha=1, figsize=(10, 7), dpi=100):
+        plt.figure(figsize=figsize, dpi=dpi)
+        sns.heatmap(numeric_df.corr(), annot=True, cmap=sns.cubehelix_palette(as_cmap=True), alpha=alpha)
+        plt.tight_layout()  # Ajustement automatique de la mise en page
         return pn.pane.Matplotlib(plt.gcf())
 
-    # Créez un bouton de zoom
-    zoom_button = pn.widgets.Button(name="Zoom")
+    # Créez un widget Panel pour afficher la matrice de corrélation avec une transparence réduite
+    show_correlation_pane = pn.panel(show_correlation_matrix(alpha=0.7, figsize=(8, 5)))
 
-    # Fonction de zoom
-    def zoom_callback(event):
-        plt.figure(figsize=(20, 14))
-        sns.heatmap(numeric_df.corr(), annot=True, cmap=sns.cubehelix_palette(as_cmap=True))
-        plt.title('Matrice de Corrélation (Zoom)')
-        show_correlation_pane.object = pn.pane.Matplotlib(plt.gcf())
-
-    # Attachez la fonction de zoom au bouton de zoom
-    zoom_button.on_click(zoom_callback)
-
-    # Créez un widget Panel pour afficher la description
-    description = pn.pane.Markdown("### Matrice de Corrélation")
-
-    # Créez un widget Panel pour afficher la matrice de corrélation
-    show_correlation_pane = pn.panel(show_correlation_matrix())
-
-    # Créez un tableau de bord Panel
-    correlation_pane = pn.Column(
-        description,
-        show_correlation_pane,
-        zoom_button,
+    # Appliquez des styles personnalisés à la colonne correlation_dashboard
+    correlation_dashboard = pn.Column(
+        pn.Row(show_correlation_pane, align='end'),  # Alignez la matrice de corrélation à droite
+        css_classes=['custom-correlation-dashboard']
+         # Ajoutez une classe CSS personnalisée
     )
 
-    return correlation_pane
+    
 
-
+    return correlation_dashboard

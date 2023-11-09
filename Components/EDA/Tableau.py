@@ -1,3 +1,4 @@
+from turtle import width
 import panel as pn
 import pandas as pd
 
@@ -5,7 +6,7 @@ import pandas as pd
 def create_dataframe_table(df):
     # Créez un widget Tabulator pour afficher le DataFrame
     tabulator_widget = pn.widgets.Tabulator(
-        df, height=300, theme='default', pagination='local', page_size=10
+        df, height=400,width=1300, theme='default', pagination='local', page_size=10
     )
     
     # Créez un panneau pour afficher le widget Tabulator
@@ -15,5 +16,3 @@ def create_dataframe_table(df):
     )
     
     return table_panel
-
-

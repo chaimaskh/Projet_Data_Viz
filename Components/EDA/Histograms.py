@@ -101,7 +101,7 @@ def create_bar_plot(data):
             ylabel="Popularity",
             title=f'Top 10 Popularity by {filter_value}',
             rot=45,
-            height=500,
+            height=600,
             width=800
         )
 
@@ -110,7 +110,7 @@ def create_bar_plot(data):
     # Combine the Plot and Selector using Panel
     layout = pn.Column(
         pn.Row(filter_selector),
-        pn.Row(update_plot)
+        pn.Row(update_plot),
     )
 
     return layout
