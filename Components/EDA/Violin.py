@@ -15,13 +15,14 @@ def create_genre_valence_dashboard(df):
         y='valence',
         by='track_genre',
         cmap='viridis',
-        title='Distribution de Valence par Genre' , Style={'text-align': 'center'}
+        title='Distribution of Valence by Genre' , Style={'text-align': 'center'}
     )
     
     # Create the Panel dashboard
     dashboard = pn.Column(
-        pn.pane.Markdown("### Violin Plot de la Distribution de Valence par Genre (Genres les plus populaires)"),
-        violin_plot
+        pn.pane.Markdown("### Violin Plot of Valence Distribution by Genre (Most Popular Genres)."),
+         pn.Row(violin_plot) , align='center'
+
     )
     
     return dashboard

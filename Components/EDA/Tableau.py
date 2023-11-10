@@ -11,7 +11,7 @@ def create_dataframe_table(df):
     
     # Créez un panneau pour afficher le widget Tabulator
     table_panel = pn.Column(
-        pn.pane.Markdown("### Tableau de données"),
+        pn.pane.Markdown("### Data table "),
         tabulator_widget
     )
     

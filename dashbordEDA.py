@@ -18,8 +18,8 @@ df = load_clean_dataset('./data/dataset.csv')
 
 data_table = create_dataframe_table(df)
 correlation_dashboard = create_correlation_dashboard(df)
-scatter1 = plot_scatter1(df, x_column='energy', y_column='loudness', color_column='loudness', title='Relation entre loudness et Énergie')
-scatter2 = plot_scatter2(df, x_column='energy', y_column='danceability', color_column='danceability', title='Relation entre danceability et Énergie')
+scatter1 = plot_scatter1(df, x_column='energy', y_column='loudness', color_column='loudness', title='The relationship between loudness and energy.')
+scatter2 = plot_scatter2(df, x_column='energy', y_column='danceability', color_column='danceability', title='The relationship between danceability and energy.')
 Histogram1 = create_popularity_distribution_dashboard(df)
 Histogram2 = create_popularity_artists_dashboard(df)
 Histogram3 = create_bar_plot(df)
@@ -45,7 +45,7 @@ dashboard = pn.Column(
 gif_pane = pn.pane.GIF('Templates\image.gif', sizing_mode='scale_both')
 #Template
 template = pn.template.FastListTemplate(
-    title='Spotify dashboard', 
+    title='EDA dashboard', 
     sidebar=[pn.Row(pn.Spacer(width=10), pn.pane.Markdown("# Spotify", style={'text-align': 'center', 'font-size': '24px','margin-left': '50px'})),
              pn.pane.Markdown("""
         #### Level up your vibes with Spotify! 🎵 
@@ -63,8 +63,8 @@ template = pn.template.FastListTemplate(
     pn.Row(
         data_table), 
     pn.Row(
-        Donut, 
-        pn.Column(Histogram3)),
+        Histogram3, 
+        pn.Column(Donut)),
     pn.Row(Line_plot), 
     pn.Row(scatter1, pn.Column(scatter2)),
     pn.Row(Violin)

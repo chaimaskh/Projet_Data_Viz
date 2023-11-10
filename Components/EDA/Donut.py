@@ -14,7 +14,7 @@ def create_genre_popularity_donut_chart(df):
     top_10_genres = sorted_genre_popularity.head(10)
 
     # Créez un Donut Chart avec Plotly Express
-    fig = px.pie(top_10_genres, names='track_genre', values='popularity', hole=0.3, title='Genres de pistes les plus populaires')
+    fig = px.pie(top_10_genres, names='track_genre', values='popularity', hole=0.3, title='Most Popular Track Genres')
     fig.update_traces(textinfo='percent+label')
 
     
@@ -28,8 +28,10 @@ def create_genre_popularity_donut_chart(df):
 
     # Créez un tableau de bord Panel
     dashboard = pn.Column(
-        pn.pane.Markdown("### Genres de pistes les plus populaires"),
+        pn.pane.Markdown("### Most Popular Track Genres"),
         donut_chart,
+        height=400,
+        width=600,
     )
 
     return dashboard

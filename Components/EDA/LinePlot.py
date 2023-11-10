@@ -10,6 +10,7 @@ def create_duration_plot(data):
             width=1200,
             sizing_mode='stretch_width',
             
+            
         )
 
     # Specify the columns you want in the filter widget
@@ -19,11 +20,10 @@ def create_duration_plot(data):
     filter_widget = pn.widgets.Select(
         name='Select Attribute',
         options=filter_attributes,
-        value="tempo"
+        value="tempo",
+        
     )
 
-    # Create a blank plot
-    plot = _create_plot(filter_widget.value)
 
     # Combine the Plot and Selector using Panel
     layout = pn.Column(filter_widget)
