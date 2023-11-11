@@ -15,7 +15,7 @@ def create_genre_valence_dashboard(df):
         y='valence',
         by='track_genre',
         cmap='viridis',
-        title='Distribution of Valence by Genre' , Style={'text-align': 'center'}
+        title='Distribution of Valence by Genre',width=1000 , Style={'text-align': 'center'}
     )
     
     # Create the Panel dashboard

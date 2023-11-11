@@ -107,7 +107,7 @@ def create_dash(data,top_level_genres):
         model_fitted = False
 
     # Create a widget for selecting the top-level genre
-    genre_selector = pn.widgets.Select(name="Select Top-Level Genre",value=' ' ,options=list(top_level_genres))
+    genre_selector = pn.widgets.Select(name="Select Top-Level Genre",value='' ,options=list(top_level_genres))
     genre_selector.param.watch(update_dataset, 'value')
 
 
