@@ -20,7 +20,8 @@ def create_genre_valence_dashboard(df):
     
     # Create the Panel dashboard
     dashboard = pn.Column(
-        pn.pane.Markdown("### Violin Plot of Valence Distribution by Genre (Most Popular Genres)."),
+        pn.pane.Markdown("### Violin Plot of Valence Distribution by Genre (Most Popular Genres)",style={'text-align': 'center', 'font-size': '24px'}),
+
          pn.Row(violin_plot) , align='center'
 
     )

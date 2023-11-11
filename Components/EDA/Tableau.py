@@ -8,10 +8,12 @@ def create_dataframe_table(df):
     tabulator_widget = pn.widgets.Tabulator(
         df, height=400,width=1300, theme='default', pagination='local', page_size=10
     )
+    title_markdown = pn.pane.Markdown("# DataFrame Table", style={'text-align': 'center', 'font-size': '24px'})
+
     
     # Créez un panneau pour afficher le widget Tabulator
     table_panel = pn.Column(
-        pn.pane.Markdown("### Data table "),
+        title_markdown,
         tabulator_widget
     )
     

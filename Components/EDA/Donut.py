@@ -1,37 +1,30 @@
 import pandas as pd
-import plotly.express as px
 import panel as pn
-pn.extension('plotly')
+import plotly.express as px
 
-def create_genre_popularity_donut_chart(df):
-    # Groupez les pistes par genre et calculez la popularité moyenne pour chaque genre
-    genre_popularity = df.groupby('track_genre')['popularity'].mean().reset_index()
 
-    # Triez les genres en fonction de leur popularité moyenne (du plus élevé au plus bas)
-    sorted_genre_popularity = genre_popularity.sort_values(by='popularity', ascending=False)
+def danceability_pie_plot(data):
 
-    # Sélectionnez les 10 genres les plus populaires
-    top_10_genres = sorted_genre_popularity.head(10)
+    # Categorize tracks based on danceability levels
+    bins = [0, 0.3, 0.7, 1]
+    labels = ['Low Danceability', 'Moderate Danceability', 'High Danceability']
+    temp = pd.cut(data['danceability'], bins=bins, labels=labels, include_lowest=True)
 
-    # Créez un Donut Chart avec Plotly Express
-    fig = px.pie(top_10_genres, names='track_genre', values='popularity', hole=0.3, title='Most Popular Track Genres')
-    fig.update_traces(textinfo='percent+label')
+    # Count the number of tracks in each danceability category
+    danceability_counts = temp.value_counts().reset_index()
+    danceability_counts.columns = ['Danceability Category', 'Count']
 
-    
-    fig.update_layout(
-        plot_bgcolor='rgba(0,0,0,0)',
-        paper_bgcolor='rgba(0,0,0,0)',
+    # Use Plotly Express to create the Pie plot
+    fig = px.pie(danceability_counts, names='Danceability Category', values='Count', title='Distribution of Tracks Based on Danceability')
+
+    # Convert Plotly figure to hvplot for Panel compatibility
+    pie_plot = pn.pane.Plotly(fig)
+
+    # Combine the Plot and Selector using Panel
+    layout = pn.Column(        pn.pane.Markdown("# Danceability Pie Plot", style={'text-align': 'center', 'font-size': '24px'}),
+
+        pn.Row(pie_plot),
     )
 
-    # Créez un widget Panel pour afficher le graphique Plotly
-    donut_chart = pn.pane.Plotly(fig)
+    return layout
 
-    # Créez un tableau de bord Panel
-    dashboard = pn.Column(
-        pn.pane.Markdown("### Most Popular Track Genres"),
-        donut_chart,
-        height=400,
-        width=600,
-    )
-
-    return dashboard
